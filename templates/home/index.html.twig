@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+
+{% block body %}
+
+{% block stylesheets %}
+        {{ parent() }} 
+{% endblock %}
+
+<style>
+    
+</style>
+
+<div class="card">
+    <div class="card-header">Formulaire de recherche</div>
+    <div class="card-body">
+        {{ form(form) }}
+    </div>
+</div>
+
+    <!-- Après submit -->
+    {% if products is defined %}
+        {{ include('home/_partial/result_product.html.twig') }}
+    {% endif %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+       {{ parent() }}
+       {{ encore_entry_script_tags('control') }}
+       <script type="text/javascript">    
+       </script>   
+{% endblock %}
+
