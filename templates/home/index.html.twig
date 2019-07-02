@@ -20,11 +20,8 @@
     </div>
 </div>
 
-    <!-- Après submit -->
-    {% if products is defined %}
-        {{ include('home/_partial/result_product.html.twig') }}
-    {% endif %}
-
+    <!-- Insérer le tableau retourné par appel ajax -->
+   <div id="ajaxResults"></div>
 
 {% endblock %}
 

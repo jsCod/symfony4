@@ -32,9 +32,14 @@ class HomeController extends AbstractController
         $form->handleRequest($request);
 
         if( $request->isXmlHttpRequest() && $request->isMethod('POST') ){
+            //Reconstruction en object du formulaire de recherche
             $product = $form->getData();
 
-            return new JsonResponse(['name'=>$product->getName(),'price'=>$product->getPrice()]);
+            //Récupération des objets en base de donnees
+            $products = $em->getRepository(Product::class)->findProductsByCriteria($product);
+            return $this->render('home/_partial/result_product.html.twig', ['products'=>$products]);
+
+            //return new JsonResponse(['name'=>$product->getName(),'price'=>$product->getPrice()]);
         }
 
         /*if( $form->isSubmitted() && $form->isValid() ){
