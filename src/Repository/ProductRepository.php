@@ -49,16 +49,22 @@ class ProductRepository extends ServiceEntityRepository
     */
 
 
-    public function findProductsByCriteria(Product $product)
+    public function findProductsByCriteria($filter = [])
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.name = :val')
-            ->setParameter('val', $product->getName())
-            ->orderBy('p.id', 'ASC')
+        $qb = $this->createQueryBuilder('p');
+        if(!empty($filter['name'])){
+            $qb->andWhere('p.name LIKE :val')
+            ->setParameter('val', '%'.$filter['name'].'%');
+        }
+        if(!empty($filter['price'])){
+            $qb->andWhere('p.price = :prix')
+            ->setParameter('prix', $filter['price']);
+        }
+        $qb->orderBy('p.id', 'ASC')
             //->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+            ;
+            
+        return $qb->getQuery()->getResult();
     }
 
 
